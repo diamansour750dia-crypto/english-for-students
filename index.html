@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced EduApp</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Interactive EduApp</h1>
+        <div id="progress-section">
+            <h2>Progress Tracking</h2>
+            <progress id="progress-bar" value="0" max="100"></progress>
+            <span id="progress-text">0%</span>
+        </div>
+        <div id="stats-section">
+            <h2>Statistics</h2>
+            <p id="stats">No data yet.</p>
+        </div>
+        <button id="reset-button">Reset</button>
+    </div>
+    <script>
+        let progress = 0;
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const resetButton = document.getElementById('reset-button');
+        const statsDisplay = document.getElementById('stats');
+
+        // Load progress from localStorage
+        window.onload = function() {
+            const savedProgress = localStorage.getItem('eduappProgress');
+            if (savedProgress) {
+                progress = parseInt(savedProgress);
+                updateProgress();
+            }
+        };
+
+        // Update progress and stats
+        function updateProgress() {
+            progressBar.value = progress;
+            progressText.innerText = `${progress}%`;
+            statsDisplay.innerText = `You've completed ${progress}% of the tasks.`;
+            localStorage.setItem('eduappProgress', progress);
+        }
+
+        // Add button event listeners
+        resetButton.addEventListener('click', function() {
+            progress = 0;
+            updateProgress();
+        });
+
+        // Simulate progress increase for demonstration
+        setInterval(function() {
+            if (progress < 100) {
+                progress += 10;
+                updateProgress();
+            }
+        }, 1000);
+    </script>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        .container { max-width: 600px; margin: auto; padding: 20px; background-color: white; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 8px; }
+        h1 { color: #333; }
+        progress { width: 100%; height: 20px; }
+        #reset-button { margin-top: 20px; padding: 10px 15px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        #reset-button:hover { background-color: #218838; }
+    </style>
+</body>
+</html>
